@@ -2,10 +2,10 @@ import React from "react";
 import { ModalContainer, Overlay } from "./styles";
 
 interface ModalProps {
-  title: string,
-  children: React.ReactNode,
-  handleClose: ()  => void,
-  style?: React.CSSProperties
+  title: string;
+  children: React.ReactNode;
+  handleClose: () => void;
+  style?: React.CSSProperties;
 }
 
 function Modal({ title, children, handleClose, ...rest }: ModalProps) {

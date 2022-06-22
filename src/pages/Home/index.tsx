@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CardNote from "../../components/CardNote";
 import FabButton from "../../components/FabButton";
 import FormNote from "./FormNote";
@@ -6,19 +6,46 @@ import Modal from "../../components/Modal";
 import { NotesService } from "../../services/notes/note-service";
 import { Note } from "../../services/notes/types";
 import { Container } from "./styles";
+import { api } from "../../services/api";
 
 function Home() {
-  /// !implementar listagem
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
-  const notes = [{ text: "Nota de Exemplo", date: new Date() }] as Note[];
+  useEffect(() => {
+    (async () => {
+      const response = await api.get("/notes");
+      setNotes(response.data);
+
+      setLoading(false);
+    })();
+
+    return () => {
+      //se desinscrever
+    };
+  }, []);
+
+  const handleUpdateList = useCallback((note: Note) => {
+    setNotes((prevState) => [note, ...prevState]);
+    setShowModal(false);
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
-      {/* !!! implementar modal */}
+      {showModal && (
+        <Modal title="Nova nota" handleClose={() => setShowModal(false)}>
+          <FormNote handleUpdateNotes={handleUpdateList} />
+        </Modal>
+      )}
       <Container>
-        <CardNote note={notes[0]}></CardNote>
+        {notes.map((note) => (
+          <CardNote key={note.id} note={note}></CardNote>
+        ))}
 
-        <FabButton handleClick={() => {}}>+</FabButton>
+        <FabButton handleClick={() => setShowModal(true)}>+</FabButton>
       </Container>
     </>
   );

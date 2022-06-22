@@ -1,6 +1,14 @@
 import styled, { keyframes } from "styled-components";
 
-// !!! implementar animação
+const cardAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+  to{
+    opacity: 1;
+  }
+`;
 
 export const Container = styled.article`
   width: 200px;
@@ -11,6 +19,8 @@ export const Container = styled.article`
   color: var(--white);
   background-color: var(--primary);
   box-shadow: 2px 2px 10px #00000099;
+
+  animation: ${cardAnimation} 500ms;
 
   p:first-child {
     font-size: 14px;

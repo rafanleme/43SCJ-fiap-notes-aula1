@@ -25,6 +25,6 @@ export const FabButtonStyled = styled.button`
     color: var(--white);
     background-color: #ed145b;
     box-shadow: 2px 10px 10px #0009;
-    // !!! implementar animação 
+    transform: scale(2) translateX(5px) translateY(5px);
   }
 `;

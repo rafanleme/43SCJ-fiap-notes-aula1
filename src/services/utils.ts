@@ -4,4 +4,4 @@ const options: Intl.DateTimeFormatOptions = {
 };
 
 export const formatDate = (date: Date) =>
-  Intl.DateTimeFormat("pt-br", options).format(date);
+  Intl.DateTimeFormat(navigator.language, options).format(date);

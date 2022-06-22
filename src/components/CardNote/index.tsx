@@ -7,16 +7,21 @@ interface NoteProps {
 }
 
 function CardNote({ note }: NoteProps) {
+  const showUrgent = () =>
+    note.urgent ? (
+      <span className="material-icons" id="priority">
+        priority_high
+      </span>
+    ) : (
+      ""
+    );
+
   return (
     <>
       <Container>
-        <p>{note?.date.toString() /* !!! implementar formatação de data*/ }</p>
-        <p>{note.text}</p>
-        { /** !!! implementar renderização condicional */
-          <span className="material-icons" id="priority">
-            priority_high
-          </span>
-        }
+        <p>{formatDate(new Date(note?.date))}</p>
+        <p>{note?.text}</p>
+        {showUrgent()}
         <span className="material-icons"> delete_forever </span>
       </Container>
     </>
